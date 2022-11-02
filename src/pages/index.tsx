@@ -1,13 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useAccount } from "wagmi";
 import { Connect } from "../components";
-
-import { trpc } from "../utils/trpc";
+import MultisigForm from "../components/MultisigForm";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
-
+  const { isConnected } = useAccount();
   return (
     <>
       <Head>
@@ -22,6 +21,7 @@ const Home: NextPage = () => {
         </h1>
         <div className="flex-1">
           <Connect />
+          {isConnected && <MultisigForm />}
         </div>
       </main>
     </>

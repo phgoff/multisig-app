@@ -10,10 +10,6 @@ export function Connect() {
     useConnect();
   const { disconnect } = useDisconnect();
 
-  if (!isMounted || isLoading) {
-    return <p>loading...</p>;
-  }
-
   return (
     <div>
       <div>
@@ -28,25 +24,27 @@ export function Connect() {
             </button>
           </div>
         ) : (
-          <div className="flex gap-10">
-            {connectors
-              .filter((x) => isMounted && x.ready && x.id !== connector?.id)
-              .map((x) => (
-                <button
-                  key={x.id}
-                  className="rounded-md border border-black p-2"
-                  onClick={() => connect({ connector: x })}
-                >
-                  {x.name}
-                  {isLoading &&
-                    x.id === pendingConnector?.id &&
-                    " (connecting)"}
-                </button>
-              ))}
+          <div className="flex flex-col items-center gap-5">
+            <h1>Connect Wallet</h1>
+            <div className="flex gap-5">
+              {connectors
+                .filter((x) => isMounted && x.ready && x.id !== connector?.id)
+                .map((x) => (
+                  <button
+                    key={x.id}
+                    className="rounded-md border border-black p-2"
+                    onClick={() => connect({ connector: x })}
+                  >
+                    {x.name}
+                    {isLoading &&
+                      x.id === pendingConnector?.id &&
+                      " (connecting)"}
+                  </button>
+                ))}
+            </div>
           </div>
         )}
       </div>
-
       {error && <div className="text-red-500">{error.message}</div>}
     </div>
   );

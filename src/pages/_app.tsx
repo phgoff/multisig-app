@@ -12,6 +12,7 @@ import {
   chains as bitkubChains,
 } from "wagmi-bitkubnext-connector";
 import { env } from "../env/client.mjs";
+import ClientRender from "../components/ClientRender";
 
 const chainsData: Chain[] = [bitkubChains.testnet];
 
@@ -45,7 +46,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <WagmiConfig client={client}>
-        <Component {...pageProps} />
+        <ClientRender>
+          <Component {...pageProps} />
+        </ClientRender>
       </WagmiConfig>
     </>
   );
